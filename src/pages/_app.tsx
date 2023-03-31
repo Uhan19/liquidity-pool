@@ -1,17 +1,44 @@
-import '@rainbow-me/rainbowkit/styles.css'
-import { RainbowKitProvider } from '@rainbow-me/rainbowkit'
-import type { AppProps } from 'next/app'
-import NextHead from 'next/head'
-import * as React from 'react'
-import { WagmiConfig } from 'wagmi'
-
-import { chains, client } from '../wagmi'
+import "@rainbow-me/rainbowkit/styles.css";
+import type { AppProps } from "next/app";
+import NextHead from "next/head";
+import * as React from "react";
+import {
+  connectorsForWallets,
+  getDefaultWallets,
+  RainbowKitProvider,
+} from "@rainbow-me/rainbowkit";
+import { argentWallet, trustWallet } from "@rainbow-me/rainbowkit/wallets";
+import { configureChains, mainnet, createClient, WagmiConfig } from "wagmi";
+import { sepolia } from "wagmi/chains";
+import { publicProvider } from "wagmi/providers/public";
 
 function App({ Component, pageProps }: AppProps) {
-  const [mounted, setMounted] = React.useState(false)
-  React.useEffect(() => setMounted(true), [])
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => setMounted(true), []);
+  const { chains, provider, webSocketProvider } = configureChains(
+    [sepolia],
+    [publicProvider()]
+  );
+  const { wallets } = getDefaultWallets({
+    chains,
+    appName: "Spacecoin",
+  });
+  const connectors = connectorsForWallets([
+    ...wallets,
+    {
+      groupName: "Other",
+      //are wallet configurations for Argent and Trust Wallet, respectively.
+      //The chains parameter specifies the blockchain networks these wallets will support in your application.
+      wallets: [argentWallet({ chains }), trustWallet({ chains })],
+    },
+  ]);
+  const wagmiClient = createClient({
+    connectors,
+    provider,
+    webSocketProvider,
+  });
   return (
-    <WagmiConfig client={client}>
+    <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains}>
         <NextHead>
           <title>My wagmi + RainbowKit App</title>
@@ -20,7 +47,7 @@ function App({ Component, pageProps }: AppProps) {
         {mounted && <Component {...pageProps} />}
       </RainbowKitProvider>
     </WagmiConfig>
-  )
+  );
 }
 
-export default App
+export default App;
