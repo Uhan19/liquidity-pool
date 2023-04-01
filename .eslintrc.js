@@ -10,12 +10,16 @@ module.exports = {
     "standard",
     "plugin:prettier/recommended",
     "plugin:node/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
   ],
   parser: "@typescript-eslint/parser",
   ignorePatterns: [".eslintrc.js"],
   parserOptions: {
     ecmaVersion: 12,
-    project: "./tsconfig.json",
+    project: "./fe/tsconfig.json",
+    sourceType: "module",
+    tsconfigRootDir: __dirname,
   },
   rules: {
     "node/no-unpublished-import": "off",
@@ -23,8 +27,8 @@ module.exports = {
       "error",
       { ignores: ["modules"] },
     ],
-    '@typescript-eslint/no-floating-promises': ['error'],
+    "@typescript-eslint/no-floating-promises": ["error"],
     "no-unused-expressions": "off",
-    "camelcase": "off"
+    camelcase: "off",
   },
 };
