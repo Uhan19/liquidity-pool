@@ -87,7 +87,7 @@ function Page() {
   //   }
   // };
 
-  const getSpcBalance = useCallback(async () => {
+  const getSpcBalance = async () => {
     try {
       const balance = await spacecoin?.balanceOf(Addresses.ICO);
       setSpcBalanceLeft(ethers.utils.formatEther(balance));
@@ -98,7 +98,7 @@ function Page() {
       }
       console.log("err", typeof err);
     }
-  }, []);
+  };
 
   // useEffect(() => {}, []);
 
