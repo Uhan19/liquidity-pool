@@ -101,7 +101,7 @@ function Page() {
   return (
     <div className="">
       <h1>SPACECOIN 💫</h1>
-      <div className="font-semibold underline">Initial Coin Offering</div>
+      <div>Initial Coin Offering</div>
       <div>
         SPC Left:{" "}
         {spcBalanceLeft ? (
