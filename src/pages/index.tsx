@@ -74,19 +74,6 @@ function Page() {
     signerOrProvider: signer,
   } as UseContractConfig);
 
-  // const getSpcBalance = async () => {
-  //   try {
-  //     const balance = await spacecoin?.balanceOf(Addresses.ICO);
-  //     setSpcBalanceLeft(ethers.utils.formatEther(balance));
-  //   } catch (err: unknown) {
-  //     if (err instanceof Error) {
-  //       setErrors(err.message);
-  //       setHasError(true);
-  //     }
-  //     console.log("err", typeof err);
-  //   }
-  // };
-
   const getSpcBalance = async () => {
     try {
       const balance = await spacecoin?.balanceOf(Addresses.ICO);
@@ -99,8 +86,6 @@ function Page() {
       console.log("err", typeof err);
     }
   };
-
-  // useEffect(() => {}, []);
 
   const onClickHandler = async () => {
     try {
