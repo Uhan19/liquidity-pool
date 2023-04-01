@@ -1,20 +1,21 @@
+/* eslint-disable node/no-missing-import */
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { ethers } from "ethers";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   useAccount,
-  usePrepareContractWrite,
-  UsePrepareContractWriteConfig,
-  useContractRead,
-  UseContractReadConfig,
-  useContractWrite,
-  UseContractWriteConfig,
-  useWaitForTransaction,
+  // usePrepareContractWrite,
+  // UsePrepareContractWriteConfig,
+  // useContractRead,
+  // UseContractReadConfig,
+  // useContractWrite,
+  // UseContractWriteConfig,
+  // useWaitForTransaction,
   useContract,
   UseContractConfig,
   useSigner,
 } from "wagmi";
-import { Account } from "../components";
+import { Account } from "../components/Account";
 import { IcoAbi } from "../abis/ICO";
 import { SpacecoinAbi } from "../abis/SpaceCoin";
 import { SpaceRouterAbi } from "../abis/SpaceRouter";
@@ -73,14 +74,33 @@ function Page() {
     signerOrProvider: signer,
   } as UseContractConfig);
 
-  const getSpcBalance = async () => {
-    const balance = await spacecoin?.balanceOf(Addresses.ICO);
-    setSpcBalanceLeft(ethers.utils.formatEther(balance));
-  };
+  // const getSpcBalance = async () => {
+  //   try {
+  //     const balance = await spacecoin?.balanceOf(Addresses.ICO);
+  //     setSpcBalanceLeft(ethers.utils.formatEther(balance));
+  //   } catch (err: unknown) {
+  //     if (err instanceof Error) {
+  //       setErrors(err.message);
+  //       setHasError(true);
+  //     }
+  //     console.log("err", typeof err);
+  //   }
+  // };
 
-  useEffect(() => {
-    getSpcBalance();
-  });
+  const getSpcBalance = useCallback(async () => {
+    try {
+      const balance = await spacecoin?.balanceOf(Addresses.ICO);
+      setSpcBalanceLeft(ethers.utils.formatEther(balance));
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setErrors(err.message);
+        setHasError(true);
+      }
+      console.log("err", typeof err);
+    }
+  }, []);
+
+  // useEffect(() => {}, []);
 
   const onClickHandler = async () => {
     try {
@@ -96,10 +116,16 @@ function Page() {
   return (
     <div className="">
       <h1>SPACECOIN 💫</h1>
-      <div>Initial Coin Offering</div>
+      <div className="font-semibold underline">Initial Coin Offering</div>
       <div>
-        SPC Left: <span>{spcBalanceLeft}</span>
+        SPC Left:{" "}
+        {spcBalanceLeft ? (
+          <span>{spcBalanceLeft}</span>
+        ) : (
+          <span>loading...</span>
+        )}
       </div>
+      <button onClick={getSpcBalance}>Check balance</button>
       <h2>CurrentPhase: {}</h2>
       <button onClick={onClickHandler}>
         Advance

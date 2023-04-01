@@ -16,23 +16,24 @@ function App({ Component, pageProps }: AppProps) {
   const [mounted, setMounted] = React.useState(false);
   React.useEffect(() => setMounted(true), []);
   const { chains, provider, webSocketProvider } = configureChains(
-    [sepolia],
+    [sepolia, mainnet],
     [publicProvider()]
   );
   const { wallets } = getDefaultWallets({
     chains,
-    appName: "Spacecoin",
+    appName: "SpaceCoin",
   });
   const connectors = connectorsForWallets([
     ...wallets,
     {
       groupName: "Other",
-      //are wallet configurations for Argent and Trust Wallet, respectively.
-      //The chains parameter specifies the blockchain networks these wallets will support in your application.
+      // are wallet configurations for Argent and Trust Wallet, respectively.
+      // The chains parameter specifies the blockchain networks these wallets will support in your application.
       wallets: [argentWallet({ chains }), trustWallet({ chains })],
     },
   ]);
   const wagmiClient = createClient({
+    autoConnect: true,
     connectors,
     provider,
     webSocketProvider,
@@ -41,7 +42,7 @@ function App({ Component, pageProps }: AppProps) {
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains}>
         <NextHead>
-          <title>My wagmi + RainbowKit App</title>
+          <title>SpaceCoin</title>
         </NextHead>
 
         {mounted && <Component {...pageProps} />}
