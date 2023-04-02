@@ -17,7 +17,7 @@ module.exports = {
   ignorePatterns: [".eslintrc.js"],
   parserOptions: {
     ecmaVersion: 12,
-    project: "./fe/tsconfig.json",
+    project: "./tsconfig.json",
     sourceType: "module",
     tsconfigRootDir: __dirname,
   },
@@ -30,5 +30,10 @@ module.exports = {
     "@typescript-eslint/no-floating-promises": ["error"],
     "no-unused-expressions": "off",
     camelcase: "off",
+  },
+  settings: {
+    node: {
+      tryExtensions: [".js", ".json", ".node", ".ts", ".d.ts", ".tsx"],
+    },
   },
 };
