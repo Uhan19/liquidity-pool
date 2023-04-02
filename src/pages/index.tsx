@@ -1,7 +1,6 @@
-/* eslint-disable node/no-missing-import */
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { ethers } from "ethers";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState } from "react";
 import {
   useAccount,
   // usePrepareContractWrite,
@@ -101,7 +100,7 @@ function Page() {
   return (
     <div className="">
       <h1>SPACECOIN 💫</h1>
-      <div>Initial Coin Offering</div>
+      <div className="font-bold">Initial Coin Offering</div>
       <div>
         SPC Left:{" "}
         {spcBalanceLeft ? (
