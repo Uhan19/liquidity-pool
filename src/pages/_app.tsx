@@ -11,6 +11,7 @@ import { argentWallet, trustWallet } from "@rainbow-me/rainbowkit/wallets";
 import { configureChains, mainnet, createClient, WagmiConfig } from "wagmi";
 import { sepolia } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
+import "../styles/globals.css";
 
 function App({ Component, pageProps }: AppProps) {
   const [mounted, setMounted] = React.useState(false);
